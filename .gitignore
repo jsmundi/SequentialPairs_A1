@@ -1,3 +1,6 @@
+#Main file
+*.main
+
 # Object files
 *.o
 *.ko
