@@ -11,7 +11,7 @@
 CPP = gcc
 FLAGS = -Wall -g -std=c99 -pedantic 
 
-EXEC = main
+EXEC = wordpairs
 OBJS = main.o hashTable.o getWord.o crc64.o
 
 PROJECT_NAME = 360_1A
