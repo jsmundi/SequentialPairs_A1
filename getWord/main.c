@@ -1,7 +1,18 @@
+/*
+ * main.c
+ * SequentialPairs_A1
+ * Author: JT Mundi
+ * Date created: 01/25/2019
+ * Date last modified: 02/04/2019
+ */
+
 #include "getWord.h"
 #include "hashTable.h"
 #include <math.h>
 
+/* Data struct to hold the key, value and 
+ * position 
+ */ 
 #define HT_SIZE 100
 
 typedef struct Data
@@ -13,12 +24,15 @@ typedef struct Data
 int position = 0;
 Data *data = NULL;
 
+/* Declaratiosn of helper functiosn for main */
 int _compare(const void *a, const void *b);
 void insert(hTable *ht, char *wPair);
 void printData(hTable *ht, int count);
 void _makeData(char *key, void *value);
 void sortData(hTable *ht);
 
+
+/* Insert the word pairs into the hashtable and update count*/
 void insert(hTable *ht, char *wPair)
 {
     int *wpCount = (int *)searchHT(ht, wPair);
@@ -40,6 +54,7 @@ void insert(hTable *ht, char *wPair)
     }
 }
 
+/* Compare function for qSort */
 int _compare(const void *a, const void *b)
 {
     int _a = *((int *)((Data *)a)->value);
@@ -56,6 +71,7 @@ int _compare(const void *a, const void *b)
     return 1;
 }
 
+/* Populate data array with key and value and update position */
 void _makeData(char *key, void *value)
 {
     data[position].key = key;
@@ -63,6 +79,7 @@ void _makeData(char *key, void *value)
     position++;
 }
 
+/* Sort the data in hash table using qsort and update hahtable into array */
 void sortData(hTable *ht)
 {
     if ((data = calloc(ht->count, sizeof(Data))) == NULL)
@@ -74,6 +91,7 @@ void sortData(hTable *ht)
     qsort(data, ht->count, sizeof(Data), _compare);
 }
 
+/* Prints out keys and count */
 void printData(hTable *ht, int count)
 {
     if (count == 0 || count > (ht->count))
@@ -98,7 +116,7 @@ int main(int argc, char const *argv[])
     int countFlag = 1;
     int count = 0;
 
-
+    //Initialize table
     hTable *ht = createHT(HT_SIZE);
 
     if (argv[1] == NULL)
@@ -113,6 +131,7 @@ int main(int argc, char const *argv[])
         countFlag++;
     }
 
+    //Iterate the argc for files
     while (countFlag < argc)
     {
 
@@ -122,6 +141,7 @@ int main(int argc, char const *argv[])
             exit(1);
         }
 
+        //Store word into temp from getWord.c
         temp = getNextWord(fp);
 
         while (temp != NULL)
@@ -153,8 +173,12 @@ int main(int argc, char const *argv[])
         countFlag++;
     }
 
+    //Sort the data in desc order
     sortData(ht);
+    //Print the data
     printData(ht, count);
+
+    //Free allocated memory 
     free(data);
     destroyHT(ht, destroyNode);
     free(ht->items);

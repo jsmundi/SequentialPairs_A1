@@ -8,25 +8,35 @@
 # Run    : make run
 # Clean  : make clean
 
-CC=gcc
-COMPILE=-g -c -std=c99 -Wall -pedantic
-LINK= -g
+CPP = gcc
+FLAGS = -Wall -g -std=c99 -pedantic 
 
+EXEC = main
+OBJS = main.o hashTable.o getWord.o crc64.o
 
-wordpairs: main.o crc64.o hashTable.o getWord.o
-	$(CC) $(LINK) -o wordpairs main.o crc64.o hashTable.o getWord.o
+PROJECT_NAME = PROGRAM_1
+FILES = hashTable.c hashTable.h crc64.c crc64.h getWord.c getWord.h main.c Makefile
 
-main.o:	main.c hashTable.h getWord.h
-	$(CC) $(COMPILE) main.c
-
-getWord.o: getWord.h getWord.c
-	$(CC) $(COMPILE) getWord.c
-
-crc64.o: crc64.c crc64.h 
-	$(CC) $(COMPILE) crc64.c
-
-hashTable.o: hashTable.c hashTable.h crc64.h
-	$(CC) $(COMPILE) hashTable.c
+default:${EXEC}
 
 clean:
-	rm *.o wordpairs
+	rm -f ${EXEC}
+	rm -f *.o
+
+run: ${EXEC}
+	./${EXEC}
+
+${EXEC}:${OBJS}
+	${CPP} ${FLAGS} -o ${EXEC} ${OBJS}
+
+tar:
+	tar -cvf ${PROJECT_NAME}.tgz ${FILES}
+
+
+.c.o:
+	${CPP} ${FLAGS} -c $<
+
+main.o: main.c hashTable.h
+hashTable.o: hashTable.c getWord.h crc64.h
+getWord.o: getWord.c getWord.h
+crc64.o: crc64.c crc64.h

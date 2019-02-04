@@ -16,4 +16,3 @@
 char *getNextWord(FILE *fd);
 
 #endif
-a

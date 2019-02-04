@@ -3,7 +3,7 @@
  * SequentialPairs_A1
  * Author: JT Mundi
  * Date created: 01/25/2019
- * Date last modified: 02/03/2019
+ * Date last modified: 02/04/2019
  */
 
 #include "hashTable.h"
@@ -68,9 +68,9 @@ int hashKey(hTable *ht, char *key)
 
 void insertHT(hTable *ht, char *key, void *value)
 {
-    double size = ht->size;
-    double count = ht->count;
-    double threshold = (count / size);
+    long double size = ht->size;
+    long double count = ht->count;
+    long double threshold = (count / size);
     int hashBuc = hashKey(ht, key);
 
     //Initalize new node and pointers
@@ -114,7 +114,7 @@ void insertHT(hTable *ht, char *key, void *value)
     }
 
     //Test for load factor and resize
-    if (threshold > 0.7)
+    if (threshold > 0.7f)
     {
         resizeHT(ht);
     }
@@ -129,18 +129,27 @@ void insertHT(hTable *ht, char *key, void *value)
  */
 void *searchHT(hTable *ht, char *key)
 {
-    Node *list;
-    unsigned long long hashval = hashKey(ht, key);
-
-    for (list = ht->items[hashval]; list != NULL; list = list->next)
-    {
-        if (strcmp(key, list->key) == 0)
-        {
-            return list;
+   int hashBuc = hashKey(ht, key);
+    Node *current;                                    // to hold where we are in LL
+    current = ht->items[hashBuc];
+    while (current != NULL && current->key != NULL) {
+        if (strcmp(key, current->key) != 0) {           // not the same
+            current = current->next;                    // transverse LL
+        }
+        else if (strcmp(key, current->key) == 0) {      // they match
+            return current->value;
         }
     }
-    return NULL;
+    return NULL;   
 }
+
+/*
+ * void destroyHT(hTable *ht, void(*f)(Node *current))
+ * 
+ * Iterate the hashtable and delete a key and destroy 
+ * the node. Rearrange the next pointers.
+ * 
+ */ 
 void destroyHT(hTable *ht, void (*f)(Node *current))
 {
     Node *current = NULL;
@@ -167,6 +176,28 @@ void destroyHT(hTable *ht, void (*f)(Node *current))
     }
 }
 
+
+/*
+ * void destroyNode(Node *curr)
+ *
+ * Empty the node and delete key 
+ * and value pairs. 
+ * 
+ */ 
+void destroyNode(Node *curr)
+{
+    if ((curr->value == NULL) || (curr->key == NULL))
+    {
+        free(curr);
+    }
+    else
+    {
+        free(curr->value);
+        free(curr->key);
+        free(curr);
+    }
+}
+
 void updateHT(hTable *ht, void (*f)(char *k, void *v))
 {
     int size = ht->size;
@@ -179,13 +210,20 @@ void updateHT(hTable *ht, void (*f)(char *k, void *v))
         {
             while (curr != NULL)
             {
-                f(curr->key, (int*)curr->value);
+                f(curr->key, (int *)curr->value);
                 curr = curr->next;
             }
         }
     }
 }
 
+/* void resizeHT(hTable *oldHT)
+ *
+ * Iterate the hash table copy data to temporaty table
+ * resize the table by factor of three copy data 
+ * to the old table after resizing and delete the temporary table.
+ * 
+ */ 
 void resizeHT(hTable *oldHT)
 {
     int newSize = oldHT->size * 3;
@@ -218,18 +256,4 @@ void resizeHT(hTable *oldHT)
     destroyHT(tempHT, destroyNode);
     free(tempHT->items);
     free(tempHT);
-}
-
-void destroyNode(Node *curr)
-{
-    if ((curr->value == NULL) || (curr->key == NULL))
-    {
-        free(curr);
-    }
-    else
-    {
-        free(curr->value);
-        free(curr->key);
-        free(curr);
-    }
 }

@@ -1,3 +1,11 @@
+/*
+ * hashTable.h
+ * SequentialPairs_A1
+ * Author: JT Mundi
+ * Date created: 01/25/2019
+ * Date last modified: 02/04/2019
+ */
+
 #ifndef HASHTABLE_H
 #define HASHTABLE_H
 
