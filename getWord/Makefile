@@ -1,8 +1,8 @@
 
 # Makefile 
-# Program 5
+# Program 1
 #
-# Author: Jaiteg S Mundi
+# Author: JT Mundi
 #
 # Compile: make
 # Run    : make run
@@ -14,7 +14,7 @@ FLAGS = -Wall -g -std=c99 -pedantic
 EXEC = main
 OBJS = main.o hashTable.o getWord.o crc64.o
 
-PROJECT_NAME = PROGRAM_1
+PROJECT_NAME = 360_1A
 FILES = hashTable.c hashTable.h crc64.c crc64.h getWord.c getWord.h main.c Makefile
 
 default:${EXEC}
