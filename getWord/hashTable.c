@@ -129,18 +129,21 @@ void insertHT(hTable *ht, char *key, void *value)
  */
 void *searchHT(hTable *ht, char *key)
 {
-   int hashBuc = hashKey(ht, key);
-    Node *current;                                    // to hold where we are in LL
+    int hashBuc = hashKey(ht, key);
+    Node *current;
     current = ht->items[hashBuc];
-    while (current != NULL && current->key != NULL) {
-        if (strcmp(key, current->key) != 0) {           // not the same
-            current = current->next;                    // transverse LL
+    while (current != NULL && current->key != NULL)
+    {
+        if (strcmp(key, current->key) != 0)
+        {
+            current = current->next;
         }
-        else if (strcmp(key, current->key) == 0) {      // they match
+        else if (strcmp(key, current->key) == 0)
+        {
             return current->value;
         }
     }
-    return NULL;   
+    return NULL;
 }
 
 /*
@@ -149,23 +152,24 @@ void *searchHT(hTable *ht, char *key)
  * Iterate the hashtable and delete a key and destroy 
  * the node. Rearrange the next pointers.
  * 
- */ 
+ */
 void destroyHT(hTable *ht, void (*f)(Node *current))
 {
     Node *current = NULL;
     Node *temp = NULL;
 
     for (int i = 0; i < ht->size; i++)
-    { //loop through hashtable
+    {
         current = ht->items[i];
         while (current != NULL)
-        { // loop through LL
+        {
             if (current->next != NULL)
             {
-                temp = current->next; // save the next pointer
-                current->next = NULL; // disconnect current->next
-                f(current);           // free function
-                current = temp;       // set current to next pointer
+                temp = current->next;
+                current->next = NULL;
+                //Call destroy Node
+                f(current);
+                current = temp;
             }
             else
             {
@@ -176,14 +180,13 @@ void destroyHT(hTable *ht, void (*f)(Node *current))
     }
 }
 
-
 /*
  * void destroyNode(Node *curr)
  *
  * Empty the node and delete key 
  * and value pairs. 
  * 
- */ 
+ */
 void destroyNode(Node *curr)
 {
     if ((curr->value == NULL) || (curr->key == NULL))
@@ -223,7 +226,7 @@ void updateHT(hTable *ht, void (*f)(char *k, void *v))
  * resize the table by factor of three copy data 
  * to the old table after resizing and delete the temporary table.
  * 
- */ 
+ */
 void resizeHT(hTable *oldHT)
 {
     int newSize = oldHT->size * 3;

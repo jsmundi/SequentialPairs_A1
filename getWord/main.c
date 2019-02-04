@@ -12,7 +12,7 @@
 
 /* Data struct to hold the key, value and 
  * position 
- */ 
+ */
 #define HT_SIZE 100
 
 typedef struct Data
@@ -30,7 +30,6 @@ void insert(hTable *ht, char *wPair);
 void printData(hTable *ht, int count);
 void _makeData(char *key, void *value);
 void sortData(hTable *ht);
-
 
 /* Insert the word pairs into the hashtable and update count*/
 void insert(hTable *ht, char *wPair)
@@ -107,11 +106,11 @@ void printData(hTable *ht, int count)
 int main(int argc, char const *argv[])
 {
 
-    FILE *fp= NULL;
-    char *temp= NULL;
-    char *w1= NULL;
-    char *w2= NULL;
-    char *wPair= NULL;
+    FILE *fp = NULL;
+    char *temp = NULL;
+    char *w1 = NULL;
+    char *w2 = NULL;
+    char *wPair = NULL;
     int wLen = 0;
     int countFlag = 1;
     int count = 0;
@@ -178,7 +177,7 @@ int main(int argc, char const *argv[])
     //Print the data
     printData(ht, count);
 
-    //Free allocated memory 
+    //Free allocated memory
     free(data);
     destroyHT(ht, destroyNode);
     free(ht->items);
