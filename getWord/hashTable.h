@@ -18,15 +18,16 @@ typedef struct hashTable
 {
     int count;
     int size;
-    Node **list; 
+    Node **items; 
 }hTable;
 
-hTable newHT(int size);
+hTable *createHT(int size);
 int hashKey(hTable *ht, char *key);
 void insertHT(hTable *ht, char *key, void *value); 
-void searchHT(hTable *ht, char *key);
-void deleteHT(hTable *ht, void(*func)(Node *curr));
+void *searchHT(hTable *ht, char *key);
+void destroyHT(hTable *ht, void (*f)(Node *current));
 void resizeHT(hTable *ht); 
 void destroyNode(Node *curr); 
+void updateHT(hTable *ht, void (*f)(char *k, void *v));
 
 #endif

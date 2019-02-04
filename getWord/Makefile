@@ -8,33 +8,25 @@
 # Run    : make run
 # Clean  : make clean
 
-CPP = gcc
-FLAGS = -Wall -g -std=c99 -pedantic 
+CC=gcc
+COMPILE=-g -c -std=c99 -Wall -pedantic
+LINK= -g
 
-EXEC = main
-OBJS = main.o getWord.o 
 
-PROJECT_NAME = Assignment_1
-FILES = main.c Makefile
+wordpairs: main.o crc64.o hashTable.o getWord.o
+	$(CC) $(LINK) -o wordpairs main.o crc64.o hashTable.o getWord.o
 
-default:${EXEC}
+main.o:	main.c hashTable.h getWord.h
+	$(CC) $(COMPILE) main.c
+
+getWord.o: getWord.h getWord.c
+	$(CC) $(COMPILE) getWord.c
+
+crc64.o: crc64.c crc64.h 
+	$(CC) $(COMPILE) crc64.c
+
+hashTable.o: hashTable.c hashTable.h crc64.h
+	$(CC) $(COMPILE) hashTable.c
 
 clean:
-	rm -f ${EXEC}
-	rm -f *.o
-
-run: ${EXEC}
-	./${EXEC}
-
-${EXEC}:${OBJS}
-	${CPP} ${FLAGS} -o ${EXEC} ${OBJS}
-
-tar:
-	tar -cvf ${PROJECT_NAME}.tgz ${FILES}
-
-
-.c.o:
-	${CPP} ${FLAGS} -c $<
-
-main.o: main.c getWord.h
-getWord.o: getWord.c getWord.h
+	rm *.o wordpairs
