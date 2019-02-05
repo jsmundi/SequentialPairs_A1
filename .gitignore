@@ -31,3 +31,8 @@
 #MAC OS Files
 *.DS_Store
 .DS_Store
+
+#Storeage
+*.zip
+*.tar
+*.tar.gz
