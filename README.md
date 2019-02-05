@@ -64,7 +64,7 @@ Output for mobydick.txt and gettysubrg
 745 to the
 ```
 
-#Folder Tree
+# Folder Tree
 ```
 .
 ├── CS360_Assignment_1.pdf
