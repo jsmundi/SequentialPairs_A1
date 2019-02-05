@@ -9,7 +9,7 @@
 #ifndef HASHTABLE_H
 #define HASHTABLE_H
 
-#include "crc64.h"
+#include "./dict/crc64.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

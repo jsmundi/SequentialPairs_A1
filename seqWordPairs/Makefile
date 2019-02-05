@@ -8,35 +8,26 @@
 # Run    : make run
 # Clean  : make clean
 
-CPP = gcc
-FLAGS = -Wall -g -std=c99 -pedantic 
+CC = gcc 
+FLAGS =  -g -std=c99 -Wall -pedantic 
+GET_PATH = .
 
-EXEC = wordpairs
-OBJS = main.o hashTable.o getWord.o crc64.o
+wordpairs: main.o hashTable.o crc64.o getWord.o
+		$(CC) $(FLAGS) -o wordpairs main.o hashTable.o crc64.o getWord.o
 
-PROJECT_NAME = 360_1A
-FILES = hashTable.c hashTable.h crc64.c crc64.h getWord.c getWord.h main.c Makefile
+main.o: main.c $(GET_PATH)/include/getWord.c
+		$(CC) -c $(FLAGS) main.c $(GET_PATH)/include/getWord.c
 
-default:${EXEC}
+crc64.o: $(GET_PATH)/dict/crc64.c $(GET_PATH)/dict/crc64.h
+		$(CC) -c $(FLAGS) $(GET_PATH)/dict/crc64.c
 
+hashTable.o: hashTable.c hashTable.h
+		$(CC) -c $(FLAGS) hashTable.c
+
+getWord.o: $(GET_PATH)/include/getWord.c $(GET_PATH)/include/getWord.h
+		$(CC) -c $(FLAGS) $(GET_PATH)/include/getWord.c
+
+# Used to clean up the solution
+# it will remove all .o file and the execution file
 clean:
-	rm -f ${EXEC}
-	rm -f *.o
-
-run: ${EXEC}
-	./${EXEC}
-
-${EXEC}:${OBJS}
-	${CPP} ${FLAGS} -o ${EXEC} ${OBJS}
-
-tar:
-	tar -cvf ${PROJECT_NAME}.tgz ${FILES}
-
-
-.c.o:
-	${CPP} ${FLAGS} -c $<
-
-main.o: main.c hashTable.h
-hashTable.o: hashTable.c getWord.h crc64.h
-getWord.o: getWord.c getWord.h
-crc64.o: crc64.c crc64.h
+	rm *.o wordpairs

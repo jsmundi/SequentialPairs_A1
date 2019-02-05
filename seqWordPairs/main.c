@@ -6,8 +6,8 @@
  * Date last modified: 02/04/2019
  */
 
-#include "getWord.h"
 #include "hashTable.h"
+#include "./include/getWord.h"
 #include <math.h>
 
 /* Data struct to hold the key, value and 

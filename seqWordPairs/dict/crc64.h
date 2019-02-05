@@ -6,6 +6,6 @@
 /* crc64 takes a string argument and computes a 64-bit hash based on */
 /* cyclic redundancy code computation.                               */
 
-unsigned long long crc64(char *string);
+unsigned long long crc64(char* string);
 
 #endif
