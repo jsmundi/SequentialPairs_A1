@@ -63,5 +63,31 @@ Output for mobydick.txt and gettysubrg
 1193 in the
 745 to the
 ```
+
+#Folder Tree
+```
+.
+├── CS360_Assignment_1.pdf
+├── Datasets
+│   ├── gettysburg
+│   └── mobydick.txt
+├── README.md
+└── seqWordPairs
+    ├── Makefile
+    ├── dict
+    │   ├── crc64.c
+    │   └── crc64.h
+    ├── hashTable.c
+    ├── hashTable.h
+    ├── helper.h
+    ├── include
+    │   ├── getWord.c
+    │   └── getWord.h
+    ├── lib
+    │   └── libget.a
+    └── main.c
+```
+
+5 directories, 14 files
 ### Author
 JT Mundi
